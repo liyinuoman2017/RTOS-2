@@ -95,13 +95,19 @@ button_flag ， communication_flag ，senser_flag存放在静态区中的初始�
 我们一起来看看常见的几种使用改变总值来改变程序运行状态的例子。
 **示例1：处理器复位。**
 处理器复位就是强制给处理器一个总值P0,让程序从P0重新开始运行。
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/de7ea4eed45442cd8253ec54d17009bd.png)
+
 **示例2：系统中断程序。**
 用户程序在运行过程中，系统中断产生后，处理保存现场（保存“相对总值”），执行中断程序，恢复现场（恢复“相对总值”），返回用户程序，用户程序继续执行，对于用户程序认为它是在完整的运行，从未被中断过。
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/d560656d75f34d6fa6cef0bdbdace679.png)
+
 **示例3：操作系统程序切换。**
 任务A运行中，产生时钟节拍中断，保存现场（保存任务A“相对总值”），时钟节拍函数运行，更新就绪表，选择最高优先级任务B，恢复现场（恢复任务B“相对总值”），任务B运行。
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/feb355934ea244178034970e5f111d2d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAbGl5aW51bzIwMTc=,size_10,color_FFFFFF,t_70,g_se,x_16)
+
 **因此我们可以使用改变总值的方法，来切换任务，这就是任务切换的核心思想。**
 
 
