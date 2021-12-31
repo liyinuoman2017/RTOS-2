@@ -55,6 +55,7 @@
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/ca2aed8eb8d54141869e9ffd4c7ee91c.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAbGl5aW51bzIwMTc=,size_20,color_FFFFFF,t_70,g_se,x_16)
 
 代码编译之后的MAP文件：
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/4b547d125b774e4797c43311a8e2336d.png)
 根据MAP文件可知：代码段和静态数据段在指令存储空间中，RESET段地址为0X08000000（FLASH起始地址），代码段地址为0X08000010 ，静态数据段址为0X08000098。
 
