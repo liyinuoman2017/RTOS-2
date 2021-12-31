@@ -63,15 +63,23 @@
 1、静态区，存放静态变量数据。
 2、栈区，存放局部变量数据。
 3、堆区，存放动态申请的数据。
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/515d3ee678fe4a0c9418a5772f9bdfb5.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAbGl5aW51bzIwMTc=,size_15,color_FFFFFF,t_70,g_se,x_16)
+
 静态区中存放静态变量和全局变量。示例中红色框内变量为静态变量：
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/0da2e8b85944443c9de1fa09324c8510.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAbGl5aW51bzIwMTc=,size_11,color_FFFFFF,t_70,g_se,x_16)
+
 button_flag ， communication_flag ，senser_flag存放在静态区中的初始化不为0区，clk存放在静态区中的初始化为0区。
 局部变量，函数参数，中断保存保存寄存器，都会操作栈空间。
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/aaa3c00a666a4ac7ae5188a0600c2f3c.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAbGl5aW51bzIwMTc=,size_13,color_FFFFFF,t_70,g_se,x_16)
+
 **程序运行资源**
 程序运行时，会用到如下资源：
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/9ecfc5b1f96a454a8bc26ed911057a7b.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAbGl5aW51bzIwMTc=,size_10,color_FFFFFF,t_70,g_se,x_16)
+
 处理器模型中会产生变化，并影响程序运行的部分为：
 1、寄存器堆的数据
 2、栈空间的数据（空间大小会变，内容会变）
@@ -80,16 +88,25 @@ button_flag ， communication_flag ，senser_flag存放在静态区中的初始�
 
 **程序运行过程**
 假设有一程序，程序内有一个无限循环，在循环内部有5个表达式，代码如下：
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/9a75b91203934069942632724bfa7021.png)
+
 程序运行后，会依次执行表达式1-》表达式2-》表达式3-》表达式4-》表达式5-》表达式1无限循环。**假设没有使用静态变量，没有使用堆空间，没有中断程序。**程序每执行一个表达式后的处理器状态如下：
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/449dff4726cf43d2b674dda2015a4a0e.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAbGl5aW51bzIwMTc=,size_20,color_FFFFFF,t_70,g_se,x_16)
+
 **程序循环周期执行，处理器的状态也循环周期变化。我们将在一个时钟周期内指令存储器，数据存储器，寄存器堆的所有数据称为：处理器总值。上图中处理器总值为P1,P2,P3,P4,P5 。**
+
 假设现在有一种“神奇的力量”将处理的状态改变成P3，处理将如何运行？
-处理器将会按照下图运行：![在这里插入图片描述](https://img-blog.csdnimg.cn/067bca6f56724843a2adc4f937700c85.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAbGl5aW51bzIwMTc=,size_20,color_FFFFFF,t_70,g_se,x_16)
+处理器将会按照下图运行：
+![在这里插入图片描述](https://img-blog.csdnimg.cn/067bca6f56724843a2adc4f937700c85.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAbGl5aW51bzIwMTc=,size_20,color_FFFFFF,t_70,g_se,x_16)
+
 对应的程序运行状态：表达式3-》表达式4-》表达式5-》表达式1-》表达式2-》表达式3无限循环。
 我们可以得出一个结论：**在不考虑外设，中断等因素，给处理器一个合理总值Pn,处理器的下一个总值必然为Pn+1 。**
 **利用这个原理，给处理器任意一个合理总值Pn，使得程序从任意一个合理位置开始运行。**
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/92110dcb0048414d8c8cb7af1587469a.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAbGl5aW51bzIwMTc=,size_20,color_FFFFFF,t_70,g_se,x_16)
+
 这种机制就像我们把游戏存档，接下来可以随时恢复一个存档继续进行，游戏运行效果不受是否存档影响。
 
 我们一起来看看常见的几种使用改变总值来改变程序运行状态的例子。
