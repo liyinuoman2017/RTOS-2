@@ -7,9 +7,11 @@
 **处理器内部结构**
 要理解程序在处理器中如何运行，需要先了解一下处理器内部结构，处理器结构框图如下：
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/00c714c4ab254a35bede282e28d651e9.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAbGl5aW51bzIwMTc=,size_15,color_FFFFFF,t_70,g_se,x_16)
+
 处理器通常包括：寄存器堆，运算单元，控制单元，流水线结构，指令存储器，数据存储器。
 通常情况下处理器执行指令有5个阶段：取指，译码，执行，访存，回写。
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/278ce4ff2a334aa98fbfe76c26b80c51.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAbGl5aW51bzIwMTc=,size_16,color_FFFFFF,t_70,g_se,x_16)
+
 取指：从指令存储器中读取指令
 译码：指令译码，读取寄存器
 执行：执行操作或计算地址
@@ -18,7 +20,9 @@
 
 **处理器简化模型**
  处理器可以简化为：寄存器堆，运算单元，指令存储器，数据存储器。简化模式如下：
+ 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/f91e63c7168b4cf091c88e77553b4b54.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAbGl5aW51bzIwMTc=,size_15,color_FFFFFF,t_70,g_se,x_16)
+
 处理器模型中会产生变化，并影响程序运行流程的部分为：
 1、寄存器堆，包括PC，通用寄存器堆，状态寄存器。
 2、指令存储器。
@@ -26,9 +30,13 @@
 
 **寄存器堆**
 以ARM CM3内核为例，寄存器堆包含17个寄存器：
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/97c8034e4b224472beda40b21b8e7e6e.png)
+
 处理器是通过操作寄存器堆实现程序运行，通过几个汇编指令来熟悉一下处理器工作方式。
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/106ef68c45634a2083eb84335a31a48b.png)
+
 处理器操作寄存器是需要遵循一定规定的，如ARM架构的C编译器遵循AAPCS规范。其中有一项规定为：函数调用使用R0~R3作为参数输入（大于4个参数使用栈操作），这也是为什么很过C语言编程规范中规定函数参数要不超过4个，因为超过4个会有一个额外的操作栈的过程，影响函数效率。
 
 **指令存储器**
@@ -37,11 +45,15 @@
 2、支持芯片内执行（XIP）
 
 指令存储器内部不仅仅是保存代码数据，同时还保存静态区的非零数据。
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/4667fbb8648e444f972fea4535df71cf.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAbGl5aW51bzIwMTc=,size_15,color_FFFFFF,t_70,g_se,x_16)
+
 非零静态变量区是从指令存储器中直接加载到RAM中完成初始化。如果使用的是ARM的内核芯片，系统将调用scatter-loading完成这个加载工作。
 指令存储器内部的数据绝大数情况下是不会变的（有些特殊的应用使用处理的片内FLASH保存一些用户数据）。
 汇编代码如下：
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/ca2aed8eb8d54141869e9ffd4c7ee91c.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAbGl5aW51bzIwMTc=,size_20,color_FFFFFF,t_70,g_se,x_16)
+
 代码编译之后的MAP文件：
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/4b547d125b774e4797c43311a8e2336d.png)
 根据MAP文件可知：代码段和静态数据段在指令存储空间中，RESET段地址为0X08000000（FLASH起始地址），代码段地址为0X08000010 ，静态数据段址为0X08000098。
